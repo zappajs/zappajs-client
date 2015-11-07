@@ -1,7 +1,7 @@
     request = (require 'superagent-as-promised') require 'superagent'
     socketio = require 'socket.io-client'
     domready = require 'domready'
-    {observable} = require 'riot'
+    {observable} = riot = require 'riot'
     invariate = require 'invariate'
 
     zappa = (options,f) ->
