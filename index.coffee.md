@@ -14,15 +14,15 @@
       ev = context.ev = observable()
 
       context.on = invariate (message,action) ->
-        socket.on message, ->
+        io.on message, ->
           action.apply context, arguments
 
       context.emit = invariate (message,action,ack) ->
         if typeof ack is 'function'
-          socket.emit.call socket, message, action, (data) ->
+          io.emit.call io, message, action, (data) ->
             ack.call context, data
         else
-          socket.emit.call socket, message, action
+          io.emit.call io, message, action
 
       io = context.io = socketio options.io ? {}
 
