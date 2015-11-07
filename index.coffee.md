@@ -7,6 +7,7 @@
     zappa = (options,f) ->
       if typeof options is 'function'
         [options,f] = [{},f]
+      options ?= {}
 
       context = {}
 
