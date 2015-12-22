@@ -24,7 +24,7 @@
   "homepage": "https://github.com/shimaore/zappajs-client",
   "dependencies": {
     "domready": "^1.0.8",
-    "invariate": "^1.0.0",
+    "invariate": "^1.1.0",
     "riot": "^2.3.0",
     "socket.io-client": "^1.3.7",
     "superagent": "^1.4.0",
