@@ -5,7 +5,7 @@ In e.g. browserify, do
 
     Zappa = require 'zappajs-client'
 
-`Zappa` exposes `.request` (SuperAgent + Promised), '.io' (Socket.IO client), and `.riot` (Riot.js).
+`Zappa` exposes `.request` ([SuperAgent](https://visionmedia.github.io/superagent/) + [Promised](https://github.com/shimaore/superagent-as-promised)), '.io' ([Socket.IO client](https://github.com/socketio/socket.io-client#socketio-client)), and `.riot` ([Riot.js](http://riotjs.com/)).
 
 Synopsis
 --------
