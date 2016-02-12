@@ -17,12 +17,9 @@
         io.on message, ->
           action.apply context, arguments
 
-      context.emit = invariate (message,action,ack) ->
-        if typeof ack is 'function'
-          io.emit.call io, message, action, (data) ->
-            ack.call context, data
-        else
-          io.emit.call io, message, action
+      context.emit = invariate.acked (message,action,ack) ->
+        io.emit.call io, message, action, (data) ->
+          ack.call context, data
 
       io = context.io = socketio options.io ? {}
 
