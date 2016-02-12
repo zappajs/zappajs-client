@@ -5,25 +5,25 @@ In e.g. browserify, do
 
     Zappa = require 'zappajs-client'
 
-`Zappa` exposes `.request` ([SuperAgent](https://visionmedia.github.io/superagent/) + [Promised](https://github.com/shimaore/superagent-as-promised)), '.io' ([Socket.IO client](https://github.com/socketio/socket.io-client#socketio-client)), and `.riot` ([Riot.js](http://riotjs.com/)).
+`Zappa` exposes `.request` ([SuperAgent](https://visionmedia.github.io/superagent/) + [Promised](https://github.com/shimaore/superagent-as-promised)), `.io` ([Socket.IO client](https://github.com/socketio/socket.io-client#socketio-client)), and `.riot` ([Riot.js](http://riotjs.com/)).
 
 Synopsis
 --------
 
-   Zappa io:'https://socket.example.net:6531/', ->
+    Zappa io:'https://socket.example.net:6531/', ->
 
-     @on 'event-from-server', (data) ->
+      @on 'event-from-server', (data) ->
         # do stuff with data
         @emit 'back-to-server'
 
-     @emit 'to-server-again', ok:true
+      @emit 'to-server-again', ok:true
 
-     @emit 'to-server-with-ack', ok:true, (data) ->
-      # do stuff with data
-      @emit 'back-again-to-server'
+      @emit 'to-server-with-ack', ok:true, (data) ->
+        # do stuff with data
+        @emit 'back-again-to-server'
 
-     @ev.on 'ready', ->
-       # do startup stuff; session object is shared between ExpressJS and Socket.IO
+      @ev.on 'ready', ->
+        # do startup stuff; session object is shared between ExpressJS and Socket.IO
 
 Usage
 -----
@@ -52,5 +52,5 @@ or with a function, which is called using the main context, again:
 
 The main context also contains `.ev` which is a (Riot.js) observable. The `ready` event is triggered on `.ev` once the DOM is ready and the server-side Socket.IO and ExpressJS sessions are bound together (the services may be located on different domains, it is assumed that the current code is served by ExpressJS). The context also contains `.settings` (from ZappaJS server-side) at that point.
 
-      z.ev.on 'ready', ->
+    z.ev.on 'ready', ->
        # do startup stuff; session object is shared between ExpressJS and Socket.IO
