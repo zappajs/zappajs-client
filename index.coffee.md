@@ -74,6 +74,8 @@ Finally, once the DOM is ready, trigger a `ready` event so that our client-side 
               debug 'DOM is ready'
               ev.trigger 'ready'
 
+        debug "Waiting for Zappa settings"
+
       if f?
         f.call context, context
       context
