@@ -34,11 +34,15 @@ The Zappa function is called with (optional) options; the `io` option is passed 
 
 The resulting object contains `.on`, `.emit`, and `.io` (the socket created from the options). This object is also the one used as context in the (optional) main callback function.
 
+### this.on
+
 The context inside the callbacks for `.on` is the same object:
 
     z.on 'event-from-server', (data) ->
         # do stuff with data
         @emit 'back-to-server'
+
+### this.emit
 
 Emitting events can be done without acknowledgement function:
 
@@ -50,7 +54,13 @@ or with a function, which is called using the main context, again:
       # do stuff with data
       @emit 'back-again-to-server'
 
-The main context also contains `.ev` which is a (Riot.js) observable. The `ready` event is triggered on `.ev` once the DOM is ready and the server-side Socket.IO and ExpressJS sessions are bound together (the services may be located on different domains, it is assumed that the current code is served by ExpressJS). The context also contains `.settings` (from ZappaJS server-side) at that point.
+### this.ev
+
+The main context also contains `.ev` which is a (Riot.js) observable.
+
+### this.settings
+
+The `ready` event is triggered on `.ev` once the DOM is ready and the server-side Socket.IO and ExpressJS sessions are bound together (the services may be located on different domains, it is assumed that the current code is served by ExpressJS). The context also contains `.settings` (from ZappaJS server-side) at that point.
 
     z.ev.on 'ready', ->
        # do startup stuff; session object is shared between ExpressJS and Socket.IO
