@@ -55,7 +55,12 @@ When the IO socket is connected,
 
 retrieve the Zappa application settings,
 
-        io.emit '__zappa_settings', (settings) ->
+        # io.emit '__zappa_settings', (settings) -> # FIXME
+
+        settings = {}
+
+        do (settings) ->
+
           debug 'Received settings', settings
           context.settings = settings
 
