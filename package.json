@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/shimaore/zappajs-client",
   "dependencies": {
+    "debug": "^2.2.0",
     "domready": "^1.0.8",
     "invariate": "^1.2.0",
     "riot": "^2.3.15",

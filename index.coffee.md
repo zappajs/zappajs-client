@@ -1,3 +1,5 @@
+    pkg = require './package.json'
+    debug = (require 'debug') pkg.name
     request = (require 'superagent-as-promised') require 'superagent'
     socketio = require 'socket.io-client'
     domready = require 'domready'
@@ -23,14 +25,18 @@
 
       io = context.io = socketio options.io ? {}
 
+Bind the socket with the session, then provide the session ID back to the socket server.
+
       share = (next) ->
         zappa_prefix = context.settings.zappa_prefix ? '/zappa'
         channel_name = context.settings.zappa_channel ? '__local'
 
 Let the Express server save its session.id and bind it to the key.
 
+        uri = "#{zappa_prefix}/socket/#{channel_name}/#{io.id}"
+        debug "Requesting #{uri}"
         request
-        .get "#{zappa_prefix}/socket/#{channel_name}/#{io.id}"
+        .get uri
         .accept 'json'
         .catch (error) ->
           next? key:null
@@ -39,17 +45,33 @@ Let the Express server save its session.id and bind it to the key.
 
 Let the socket.io server know how to retrieve the session.id by providing it the key.
 
+          debug "Sending __zappa_key to server", {key}
           io.emit '__zappa_key', {key}, next
 
+When the IO socket is connected,
+
       io.on 'connect', ->
+        debug "Connect"
+
+retrieve the Zappa application settings,
+
         io.emit '__zappa_settings', (settings) ->
+          debug 'Received settings', settings
           context.settings = settings
+
+then bind the Express session and the Socket.IO session on the back-end.
+
           share ({key}) ->
+            debug 'Received key', key
 
 We do not save the key inside the context until all the steps are completed.
 
             context.key = key
+
+Finally, once the DOM is ready, trigger a `ready` event so that our client-side application may start.
+
             domready ->
+              debug 'DOM is ready'
               ev.trigger 'ready'
 
       if f?
