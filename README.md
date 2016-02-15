@@ -22,7 +22,7 @@ Synopsis
         # do stuff with data
         @emit 'back-again-to-server'
 
-      @ev.on 'ready', ->
+      @ev.on 'ready', =>
         # do startup stuff; session object is shared between ExpressJS and Socket.IO
 
 Usage

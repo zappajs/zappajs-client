@@ -30,5 +30,14 @@
     "socket.io-client": "^1.4.5",
     "superagent": "^1.7.2",
     "superagent-as-promised": "^3.2.1"
+  },
+  "devDependencies": {
+    "express-session": "^1.13.0",
+    "jsdom": "^8.0.2",
+    "mocha": "^2.4.5",
+    "morgan": "^1.6.1",
+    "superagent": "^1.7.2",
+    "superagent-as-promised": "^3.2.1",
+    "zappajs": "^4.0.0-7"
   }
 }
