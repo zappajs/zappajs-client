@@ -61,10 +61,8 @@
       });
     };
     io.on('connect', function() {
-      var settings;
       debug("Connect");
-      settings = {};
-      (function(settings) {
+      io.emit('__zappa_settings', null, function(settings) {
         debug('Received settings', settings);
         context.settings = settings;
         return share(function(arg) {
@@ -77,7 +75,7 @@
             return ev.trigger('ready');
           });
         });
-      })(settings);
+      });
       return debug("Waiting for Zappa settings");
     });
     if (f != null) {
