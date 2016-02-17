@@ -39,6 +39,41 @@ These are always available inside handlers as well!
         ctx[k] = v for own k,v of o
         ctx
 
+Router
+======
+
+The router is [riot's router](https://github.com/riot/route/tree/master/doc). However it is not started until you explicitely call `@start()`, so feel free to use your own router instead of you'd like.
+
+* `@start()` is required to start the Riot router.
+
+      context.start = ->
+        riot.route.start()
+        riot.route.exec()
+
+* `@get` can be used the same way as ZappaJS' `@get`; except it works on the hash-path, not the URI path.
+  You can use `@route` if you prefer to use the riotjs name instead of `@get`.
+
+      context.get = context.route = invariate (k,v) ->
+        riot.route k, ->
+
+Route context
+-------------
+
+* `params` contains the (positional) parameters in an array.
+* `query` contains the optional query parameters as an object.
+
+Use '..' at the end of a path to match query arguments.
+
+For example to capture `/foo?bar=3`
+```
+@get '/foo..': -> @query.bar
+```
+
+          ctx = build_ctx
+            params: arguments
+            query: riot.route.query()
+          v.apply ctx, arguments
+
 Socket.IO
 =========
 
