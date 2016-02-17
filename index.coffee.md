@@ -16,19 +16,68 @@
 Context
 =======
 
+The ZappaJS-Client context contains:
+* `@ev`, a [riot-observable](https://github.com/riot/observable/tree/master/doc) -- basically you can run `.on` and `.trigger` on it. When all the ZappaJS-Client handshake is done, and once the DOM is ready, the `ready` event is triggered on `.ev`.
+* `@io`, the Socket.IO client.
+* `@request`, a Promisified `superagent` REST client.
+* `@riot`, the riotjs module.
+
       ev = context.ev = observable()
       io = context.io = socketio options.io ? {}
+      context.request = request
+      context.riot = riot
 
-      context.on = invariate (message,action) ->
-        io.on message, ->
-          action.apply context, arguments
+These are always available inside handlers as well!
 
-      context.emit = invariate.acked (message,action,ack) ->
-        io.emit.call io, message, action, (data) ->
-          ack.call context, data
+      build_ctx = (o) ->
+        ctx =
+          ev: context.ev
+          io: context.io
+          request: context.request
+          riot: context.riot
+          emit: context.emit
+        ctx[k] = v for own k,v of o
+        ctx
 
+Socket.IO
+=========
 
-Bind the socket with the session, then provide the session ID back to the socket server.
+A socket.io client is included, you can handle incoming messages from the server using `@on` and send messages back using `@emit`.
+
+      context.on = invariate (event,action) ->
+        io.on event, (data,ack) ->
+
+Message handler context
+-----------------------
+
+The same context is provided for `@on` handler as in server-side ZappaJS:
+* `@event` contains the event's name;
+* `@data` contains the optional event's data;
+* `@ack` is provided if the sender requested acknowledgment.
+
+Additionally, `@data` and `@ack` are provided as regular arguments if you'd rather use that.
+
+          ctx = build_ctx
+            event: event
+            data: data
+            ack: ack
+          action.apply ctx, arguments
+
+      context.emit = invariate.acked (event,data,ack) ->
+        io.emit.call io, event, data, (ack_data) ->
+
+Ack context
+-----------
+
+When emitting event, you might provide a `ack` callback.
+
+* `@event` contains the event's name;
+* `@data` contains the optional ack data.
+
+          ctx = build_ctx
+            event: event
+            data: ack_data
+          ack.apply ctx, arguments
 
 Apply User Function
 ===================
