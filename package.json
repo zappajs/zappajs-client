@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "express-session": "^1.13.0",
-    "jsdom": "^8.0.2",
+    "jsdom": "^8.0.3",
     "mocha": "^2.4.5",
     "morgan": "^1.6.1",
     "superagent": "^1.7.2",
