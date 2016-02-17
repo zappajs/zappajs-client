@@ -39,6 +39,23 @@ These objects are always available inside handlers as well!
         ctx[k] = v for own k,v of o
         ctx
 
+Ready
+=====
+
+When all the ZappaJS-Client handshake is done, and once the DOM is ready, the callback of `@ready` is called with its context set to the ZappaJS-Client context.
+
+```
+@ready ->
+  @emit 'ready'
+  @request.get '/data.json'
+  .then (data) -> alert data
+  # etc.
+```
+
+      context.ready = (f) ->
+        context.ev.on 'ready', ->
+          f.apply context
+
 Router
 ======
 
