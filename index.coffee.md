@@ -14,6 +14,7 @@
       context = {}
 
       ev = context.ev = observable()
+      io = context.io = socketio options.io ? {}
 
       context.on = invariate (message,action) ->
         io.on message, ->
@@ -23,7 +24,6 @@
         io.emit.call io, message, action, (data) ->
           ack.call context, data
 
-      io = context.io = socketio options.io ? {}
 
 Bind the socket with the session, then provide the session ID back to the socket server.
 
