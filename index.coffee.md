@@ -27,6 +27,12 @@
 
 Bind the socket with the session, then provide the session ID back to the socket server.
 
+Apply User Function
+===================
+
+      if f?
+        f.call context, context
+
       share = (next) ->
         zappa_prefix = context.settings.zappa_prefix ? '/zappa'
         channel_name = context.settings.zappa_channel ? '__local'
@@ -77,8 +83,6 @@ Finally, once the DOM is ready, trigger a `ready` event so that our client-side 
 
         debug "Waiting for Zappa settings"
 
-      if f?
-        f.call context, context
       context
 
     module.exports = zappa
