@@ -13,6 +13,9 @@
 
       context = {}
 
+Context
+=======
+
       ev = context.ev = observable()
       io = context.io = socketio options.io ? {}
 
@@ -32,6 +35,17 @@ Apply User Function
 
       if f?
         f.call context, context
+
+Automatically binding ExpressJS and Socket.IO
+=============================================
+
+The main purpose of ZappaJS-Client is to automatically bind the ExpressJs and the Socket.IO `@session` objects on the server side, so that all code on the server gains access to the same session object.
+This works even if the ExpressJS and the Socket.IO code are running on different servers.
+
+Share
+-----
+
+The goal of the `share` function is to bind the socket ID with the ExpressJS session, then provide the session ID back to the socket.IO server.
 
       share = (next) ->
         zappa_prefix = context.settings.zappa_prefix ? '/zappa'
@@ -54,6 +68,9 @@ Let the socket.io server know how to retrieve the session.id by providing it the
           debug "Sending __zappa_key to server", {key}
           io.emit '__zappa_key', {key}, next
 
+On IO connect
+-------------
+
 When the IO socket is connected,
 
       io.on 'connect', ->
@@ -66,12 +83,13 @@ retrieve the Zappa application settings,
           debug 'Received settings', settings
           context.settings = settings
 
-then bind the Express session and the Socket.IO session on the back-end.
+then bind the socket in the ExpressJS session, and provides the ExpressJS session ID to the Socket.IO server.
 
           share ({key}) ->
             debug 'Received key', key
 
 We do not save the key inside the context until all the steps are completed.
+Note: The key is normally not needed.
 
             context.key = key
 
