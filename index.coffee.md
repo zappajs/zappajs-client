@@ -16,18 +16,18 @@
 Context
 =======
 
-The ZappaJS-Client context contains:
-* `@ev`, a [riot-observable](https://github.com/riot/observable/tree/master/doc) -- basically you can run `.on` and `.trigger` on it. When all the ZappaJS-Client handshake is done, and once the DOM is ready, the `ready` event is triggered on `.ev`.
+The ZappaJS-Client context contains the following objects:
 * `@io`, the Socket.IO client.
 * `@request`, a Promisified `superagent` REST client.
 * `@riot`, the riotjs module.
+* `@ev`, a [riot-observable](https://github.com/riot/observable/tree/master/doc) -- basically you can run `.on` and `.trigger` on it.
 
       ev = context.ev = observable()
       io = context.io = socketio options.io ? {}
       context.request = request
       context.riot = riot
 
-These are always available inside handlers as well!
+These objects are always available inside handlers as well!
 
       build_ctx = (o) ->
         ctx =
