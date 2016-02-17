@@ -75,7 +75,7 @@ First we let ZappaJS-client negotiate all the parameters.
 
 Once everything is ready client-side (including the DOM),
 
-              @ev.on 'ready', =>
+              @ready =>
                 debug 'Client initialized'
 
 we trigger the ExpressJS request to set the session variable,
@@ -132,7 +132,7 @@ Then the test runner will ask us to
         socket = io "http://127.0.0.1:#{port}"
         another_value = Math.random()
         socket.on 'checked', ->
-          debug 'runner: On checekd -- Session data OK'
+          debug 'runner: On checked -- Session data OK'
           socket.emit 'set it', another_value
         socket.on 'was set', ->
           debug 'runner: On was set'
