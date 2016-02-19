@@ -33,8 +33,8 @@ Synopsis
         # start the router
         @start()
 
-Usage
------
+Reference
+---------
 
 The Zappa function is called with (optional) options; the `io` option is passed to Socket.IO.
 
