@@ -48,7 +48,11 @@
     };
     context.ready = function(f) {
       return context.ev.on('ready', function() {
-        return f.apply(context);
+        var ctx;
+        ctx = build_ctx({
+          settings: context.settings
+        });
+        return f.apply(ctx);
       });
     };
     context.start = function() {
