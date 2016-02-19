@@ -75,8 +75,9 @@ First we let ZappaJS-client negotiate all the parameters.
 
 Once everything is ready client-side (including the DOM),
 
-              @ready =>
+              @ready ->
                 debug 'Client initialized'
+                return unless @settings?
 
 we trigger the ExpressJS request to set the session variable,
 
