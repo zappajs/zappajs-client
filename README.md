@@ -89,24 +89,24 @@ The scope of the `ack` handler contains all the elements of the handler scope, p
 - `event`: name of the event
 - `data`: data sent with the acknowledgement.
 
-Root scope
-----------
-
-The scope of the main callback function contains all the elements of the handler scope, plus:
-
 ### this.on
 
     @on 'event-from-server', ->
         console.log 'Got', @data
         @emit 'back-to-server'
 
-The scope of the `@on` handler contains the same elements as the root scope, plus:
+The scope of the `@on` handler contains all the elements of the handler scope, plus:
 - `event`
 - `data`
 - `ack`
 
     @on 'event-from-server', ->
       @ack ok:true
+
+Root scope
+----------
+
+The scope of the main callback function contains all the elements of the handler scope, plus:
 
 ### this.ready
 

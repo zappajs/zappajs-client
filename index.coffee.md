@@ -36,6 +36,7 @@ These objects are always available inside handlers as well!
           request: context.request
           riot: context.riot
           emit: context.emit
+          on: context.on
         ctx[k] = v for own k,v of o
         ctx
 
