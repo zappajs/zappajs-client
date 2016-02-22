@@ -129,7 +129,6 @@ Then the test runner will ask us to
           virtualConsole: jsdom.createVirtualConsole().sendTo(console)
 
         io = require 'socket.io-client'
-        request = (require 'superagent-as-promised') require 'superagent'
         socket = io "http://127.0.0.1:#{port}"
         another_value = Math.random()
         socket.on 'checked', ->
