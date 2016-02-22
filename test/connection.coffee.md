@@ -9,11 +9,11 @@
         @timeout 10*1000
 
         Zappa = require 'zappajs'
-        {MemoryStore} = require 'express-session'
 
         the_value = Math.random()
 
         {app,server} = Zappa port, ->
+          {MemoryStore} = @session
           @use session:
             store: new MemoryStore()
             secret: 'foo'

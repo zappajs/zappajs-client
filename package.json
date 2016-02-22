@@ -33,7 +33,6 @@
   },
   "devDependencies": {
     "coffee-script": "^1.10.0",
-    "express-session": "^1.13.0",
     "jsdom": "^8.0.4",
     "mocha": "^2.4.5",
     "morgan": "^1.7.0",
