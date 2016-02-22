@@ -37,7 +37,8 @@
         io: context.io,
         request: context.request,
         riot: context.riot,
-        emit: context.emit
+        emit: context.emit,
+        on: context.on
       };
       for (k in o) {
         if (!hasProp.call(o, k)) continue;
