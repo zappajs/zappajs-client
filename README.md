@@ -65,6 +65,8 @@ The Socket.IO client.
 
 A (Riot.js) observable.
 
+In my own Riot.js applications, trying to follow the [Flux Architecture](https://facebook.github.io/flux/docs/overview.html#structure-and-data-flow), I use `@ev` as the dispatcher.
+
 ### this.riot
 
 Riot.JS.
