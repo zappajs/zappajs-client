@@ -101,20 +101,26 @@
       uri = zappa_prefix + "/socket/" + channel_name + "/" + io.id;
       debug("Requesting " + uri);
       return request.get(uri).accept('json')["catch"](function(error) {
-        if (typeof next === "function") {
-          next({
+        return {
+          body: {
             key: null
-          });
-        }
+          }
+        };
       }).then(function(arg) {
         var key;
         key = arg.body.key;
-        debug("Sending __zappa_key to server", {
-          key: key
-        });
-        return io.emit('__zappa_key', {
-          key: key
-        }, next);
+        if (key != null) {
+          debug("Sending __zappa_key to server", {
+            key: key
+          });
+          return io.emit('__zappa_key', {
+            key: key
+          }, next);
+        } else {
+          return next({
+            key: null
+          });
+        }
       });
     };
     io.on('connect', function() {
