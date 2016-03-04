@@ -163,14 +163,16 @@ Let the Express server save its session.id and bind it to the key.
         .get uri
         .accept 'json'
         .catch (error) ->
-          next? key:null
-          return
+          body: key: null
         .then ({body:{key}}) ->
 
 Let the socket.io server know how to retrieve the session.id by providing it the key.
 
-          debug "Sending __zappa_key to server", {key}
-          io.emit '__zappa_key', {key}, next
+          if key?
+            debug "Sending __zappa_key to server", {key}
+            io.emit '__zappa_key', {key}, next
+          else
+            next key: null
 
 On IO connect
 -------------
