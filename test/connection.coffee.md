@@ -13,6 +13,8 @@
         the_value = Math.random()
 
         {app,server} = Zappa port, ->
+          @with 'client'
+
           {MemoryStore} = @session
           @use session:
             store: new MemoryStore()
@@ -62,11 +64,11 @@
           @browserify '/test.js', ->
             Debug = require 'debug'
             Debug.enable '*'
-            pkg = require './package.json'
+            pkg = require '../package.json'
             debug = Debug "#{pkg.name}:test:connection:client"
 
             debug 'Starting client'
-            ZappaClient = require '.'
+            ZappaClient = require '..'
             debug 'Got Client'
 
 First we let ZappaJS-client negotiate all the parameters.

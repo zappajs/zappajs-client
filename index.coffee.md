@@ -62,7 +62,7 @@ When all the ZappaJS-Client handshake is done, and once the DOM is ready, the ca
 Router
 ======
 
-The router is [riot's router](https://github.com/riot/route/tree/master/doc). However it is not started until you explicitely call `@start()`, so feel free to use your own router instead of you'd like.
+The router is [riot's router](https://github.com/riot/route/tree/master/doc). However it is not started until you explicitely call `@start()`, so feel free to use your own router instead if you'd like.
 
 * `@start()` is required to start the Riot router.
 
