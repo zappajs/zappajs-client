@@ -29,7 +29,9 @@
     }
     context = {};
     ev = context.ev = observable();
-    io = context.io = socketio((ref1 = options.io) != null ? ref1 : {});
+    if (options.io !== false) {
+      io = context.io = socketio((ref1 = options.io) != null ? ref1 : {});
+    }
     context.request = request;
     context.riot = riot;
     build_ctx = function(o) {
@@ -125,6 +127,13 @@
         }
       });
     };
+    if (options.io === false) {
+      domready(function() {
+        debug('DOM is ready');
+        return ev.trigger('ready');
+      });
+      return;
+    }
     io.on('connect', function() {
       debug("Connect");
       io.emit('__zappa_settings', null, function(settings) {
