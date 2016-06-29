@@ -3,7 +3,9 @@
   var debug, domready, invariate, observable, pkg, request, riot, socketio, zappa,
     hasProp = {}.hasOwnProperty;
 
-  pkg = require('./package.json');
+  pkg = {
+    name: 'zappajs-client'
+  };
 
   debug = (require('debug'))(pkg.name);
 
