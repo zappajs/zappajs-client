@@ -135,6 +135,15 @@ When emitting event, you might provide a `ack` callback.
             data: ack_data
           ack.apply ctx, arguments
 
+Disable Socket.io on options
+----------------------------
+
+      if options.io is false
+        context.on = ->
+          debug 'Socket.IO is disabled'
+        context.emit = ->
+          debug 'Socket.IO is disabled'
+
 Apply User Function
 ===================
 
