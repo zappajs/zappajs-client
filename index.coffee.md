@@ -150,6 +150,17 @@ Apply User Function
       if f?
         f.call context, context
 
+Local-only
+----------
+
+If the `io` option is false, do not wait for IO connect.
+
+      if options.io is false
+        domready ->
+          debug 'DOM is ready'
+          ev.trigger 'ready'
+        return context
+
 Automatically binding ExpressJS and Socket.IO
 =============================================
 
@@ -183,17 +194,6 @@ Let the socket.io server know how to retrieve the session.id by providing it the
             io.emit '__zappa_key', {key}, next
           else
             next key: null
-
-Local-only
-----------
-
-If the `io` option is false, do not wait for IO connect.
-
-      if options.io is false
-        domready ->
-          debug 'DOM is ready'
-          ev.trigger 'ready'
-        return
 
 On IO connect
 -------------
