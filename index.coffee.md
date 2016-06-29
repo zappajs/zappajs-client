@@ -23,7 +23,8 @@ The ZappaJS-Client context contains the following objects:
 * `@ev`, a [riot-observable](https://github.com/riot/observable/tree/master/doc) -- basically you can run `.on` and `.trigger` on it.
 
       ev = context.ev = observable()
-      io = context.io = socketio options.io ? {}
+      unless options.io is false
+        io = context.io = socketio options.io ? {}
       context.request = request
       context.riot = riot
 
@@ -173,6 +174,17 @@ Let the socket.io server know how to retrieve the session.id by providing it the
             io.emit '__zappa_key', {key}, next
           else
             next key: null
+
+Local-only
+----------
+
+If the `io` option is false, do not wait for IO connect.
+
+      if options.io is false
+        domready ->
+          debug 'DOM is ready'
+          ev.trigger 'ready'
+        return
 
 On IO connect
 -------------
