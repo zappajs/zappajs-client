@@ -1,6 +1,6 @@
 {
   "name": "zappajs-client",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "Client-side for ZappaJS (4.0+)",
   "main": "index.js",
   "scripts": {
