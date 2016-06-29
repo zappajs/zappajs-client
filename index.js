@@ -106,6 +106,13 @@
     if (f != null) {
       f.call(context, context);
     }
+    if (options.io === false) {
+      domready(function() {
+        debug('DOM is ready');
+        return ev.trigger('ready');
+      });
+      return context;
+    }
     share = function(next) {
       var channel_name, ref2, ref3, uri, zappa_prefix;
       zappa_prefix = (ref2 = context.settings.zappa_prefix) != null ? ref2 : '/zappa';
@@ -135,13 +142,6 @@
         }
       });
     };
-    if (options.io === false) {
-      domready(function() {
-        debug('DOM is ready');
-        return ev.trigger('ready');
-      });
-      return;
-    }
     io.on('connect', function() {
       debug("Connect");
       io.emit('__zappa_settings', null, function(settings) {
