@@ -95,6 +95,14 @@
         return ack.apply(ctx, arguments);
       });
     });
+    if (options.io === false) {
+      context.on = function() {
+        return debug('Socket.IO is disabled');
+      };
+      context.emit = function() {
+        return debug('Socket.IO is disabled');
+      };
+    }
     if (f != null) {
       f.call(context, context);
     }
