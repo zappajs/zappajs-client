@@ -1,4 +1,4 @@
-    pkg = require './package.json'
+    pkg = name: 'zappajs-client'
     debug = (require 'debug') pkg.name
     request = (require 'superagent-as-promised') require 'superagent'
     socketio = require 'socket.io-client'
