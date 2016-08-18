@@ -58,6 +58,9 @@ When all the ZappaJS-Client handshake is done, and once the DOM is ready, the ca
         context.ev.on 'ready', ->
           ctx = build_ctx
             settings: context.settings
+            get: context.get
+            route: context.route
+            start: context.start
           f.apply ctx
 
 Router
