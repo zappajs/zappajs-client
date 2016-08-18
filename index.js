@@ -55,7 +55,10 @@
       return context.ev.on('ready', function() {
         var ctx;
         ctx = build_ctx({
-          settings: context.settings
+          settings: context.settings,
+          get: context.get,
+          route: context.route,
+          start: context.start
         });
         return f.apply(ctx);
       });
