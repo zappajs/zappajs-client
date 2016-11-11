@@ -1,9 +1,11 @@
 Usage
 -----
 
-In e.g. browserify, do
+In e.g. browserify or webpack, do
 
     Zappa = require 'zappajs-client'
+
+In the browser, use `browser.js`, a UMD module that will export `Zappa`.
 
 `Zappa` exposes `.request` ([SuperAgent](https://visionmedia.github.io/superagent/) + [Promised](https://github.com/shimaore/superagent-as-promised)), `.io` ([Socket.IO client](https://github.com/socketio/socket.io-client#socketio-client)), and `.riot` ([Riot.js](http://riotjs.com/)).
 

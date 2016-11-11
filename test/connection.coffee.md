@@ -3,16 +3,7 @@
 
     describe 'The ZappaJS client', ->
 
-      app = server = null
-      port = 3210
-      before (done) ->
-        @timeout 10*1000
-
-        Zappa = require 'zappajs'
-
-        the_value = Math.random()
-
-        {app,server} = Zappa port, ->
+      handler = ->
           @with 'client'
 
           {MemoryStore} = @session
@@ -26,7 +17,7 @@
 
           @get '/', ->
             debug 'server: GET /', @session.touched
-            @session.touched = the_value
+            @session.touched = "#{@id}+some-secret"
             @json value: @session.touched
 
           @get '/again', ->
@@ -35,9 +26,12 @@
 
           @get '/index.html', '<html><head><title>FooBar</title></head><body></body></html>'
 
+          @get '/browser.js', ->
+            @res.sendFile 'browser.js', root: __dirname + '/..'
+
           @on 'check', ->
             debug 'server: On check', @session.touched
-            @broadcast 'checked', null if @session.touched is the_value
+            @broadcast 'checked', null if @session.touched is "#{@id}+some-secret"
 
           @on 'set it', ->
             debug 'server: On set it'
@@ -108,30 +102,86 @@ Then the test runner will ask us to
 
             debug 'Client Ready'
 
+          @coffee '/test-browser.js', ->
+            Zappa ->
+              @ready ->
+                return unless @settings?
+                Zappa.request
+                .get '/'
+                .then =>
+                  @emit 'check'
+              @on 'set it', (data) ->
+                @emit 'set', data
+              @on 'get it', ->
+                Zappa.request
+                .get '/again'
+                .then ({body:{value}}) =>
+                  @emit 'got', value
+
+      port_1 = 3210
+      port_2 = 3211
+      server_1 = null
+      server_2 = null
+
+      before (done) ->
+        @timeout 10*1000
+
+        Zappa = require 'zappajs'
+
+        {server:server_1} = Zappa port_1, handler
+        {server:server_2} = Zappa port_2, handler
         debug 'Wait for ZappaJS to start.'
-        server.on 'listening', ->
+        server_2.on 'listening', ->
 
           debug 'And wait for browserify to finish.'
           setTimeout (-> done()), 8*1000
 
       after ->
-        server.close()
+        server_1.close()
+        server_2.close()
 
       jsdom = require 'jsdom'
 
-      it 'should establish the session server-side', (done) ->
+      it 'should establish the session server-side (using browserify)', (done) ->
         @timeout 15*1000
         debug 'Starting JSDOM'
         jsdom.env
-          url: "http://127.0.0.1:#{port}/index.html"
-          scripts: ["http://127.0.0.1:#{port}/test.js"]
+          url: "http://127.0.0.1:#{port_1}/index.html"
+          scripts: ["http://127.0.0.1:#{port_1}/test.js"]
           done: (err,window) ->
             debug "JSDOM Failed: #{err.stack ? err}" if err?
             debug 'JSDOM Done'
           virtualConsole: jsdom.createVirtualConsole().sendTo(console)
 
         io = require 'socket.io-client'
-        socket = io "http://127.0.0.1:#{port}"
+        socket = io "http://127.0.0.1:#{port_1}"
+        another_value = Math.random()
+        socket.on 'checked', ->
+          debug 'runner: On checked -- Session data OK'
+          socket.emit 'set it', another_value
+        socket.on 'was set', ->
+          debug 'runner: On was set'
+          socket.emit 'get it', null
+        socket.on 'got', (data) ->
+          debug 'runner: On got', data
+          done() if data is another_value
+
+      it 'should establish the session server-side (using browser.js)', (done) ->
+        @timeout 15*1000
+        debug 'Starting JSDOM'
+        jsdom.env
+          url: "http://127.0.0.1:#{port_2}/index.html"
+          scripts: [
+            "http://127.0.0.1:#{port_2}/browser.js"
+            "http://127.0.0.1:#{port_2}/test-browser.js"
+          ]
+          done: (err,window) ->
+            debug "JSDOM Failed: #{err.stack ? err}" if err?
+            debug 'JSDOM Done'
+          virtualConsole: jsdom.createVirtualConsole().sendTo(console)
+
+        io = require 'socket.io-client'
+        socket = io "http://127.0.0.1:#{port_2}"
         another_value = Math.random()
         socket.on 'checked', ->
           debug 'runner: On checked -- Session data OK'
