@@ -5,6 +5,7 @@
     domready = require 'domready'
     {observable} = riot = require 'riot'
     invariate = require 'invariate'
+    riot.route = require 'riot-route'
 
     zappa = (options,f) ->
       if typeof options is 'function'
