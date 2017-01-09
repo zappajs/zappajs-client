@@ -28,6 +28,8 @@ The ZappaJS-Client context contains the following objects:
         io = context.io = socketio options.io ? {}
       context.request = request
       context.riot = riot
+      context.include = (m) ->
+        m.include?.call context, context
 
 These objects are always available inside handlers as well!
 
@@ -41,6 +43,9 @@ These objects are always available inside handlers as well!
           on: context.on
         ctx[k] = v for own k,v of o
         ctx
+
+The ZappaJS-Client context also contains:
+* `@include m` executes `m.include` within the ZappaJS context itself.
 
 Ready
 =====
