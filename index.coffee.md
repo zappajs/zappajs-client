@@ -63,6 +63,7 @@ When all the ZappaJS-Client handshake is done, and once the DOM is ready, the ca
       context.ready = (f) ->
         context.ev.on 'ready', ->
           ctx = build_ctx
+            include: context.include
             settings: context.settings
             get: context.get
             route: context.route

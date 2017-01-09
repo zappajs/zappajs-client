@@ -112,6 +112,10 @@ Root scope
 
 The scope of the main callback function contains all the elements of the handler scope, plus:
 
+### this.include
+
+`this.include(mod)` will execute `mod.include` in the Root scope.
+
 ### this.ready
 
 The `ready` callback is triggered once the DOM is ready and the server-side Socket.IO and ExpressJS sessions are bound together.
