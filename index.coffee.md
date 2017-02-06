@@ -185,10 +185,11 @@ The goal of the `share` function is to bind the socket ID with the ExpressJS ses
       share = (next) ->
         zappa_prefix = context.settings.zappa_prefix ? '/zappa'
         channel_name = context.settings.zappa_channel ? '__local'
+        zappa_server = options.zappa_server ? ''
 
 Let the Express server save its session.id and bind it to the key.
 
-        uri = "#{zappa_prefix}/socket/#{channel_name}/#{io.id}"
+        uri = "#{zappa_server}#{zappa_prefix}/socket/#{channel_name}/#{io.id}"
         debug "Requesting #{uri}"
         request
         .get uri
