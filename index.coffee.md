@@ -1,6 +1,6 @@
     pkg = name: 'zappajs-client'
     debug = (require 'debug') pkg.name
-    request = (require 'superagent-as-promised') require 'superagent'
+    request = require 'superagent'
     socketio = require 'socket.io-client'
     domready = require 'domready'
     {observable} = riot = require 'riot'
