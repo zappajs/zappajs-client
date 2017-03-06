@@ -1,4 +1,3 @@
- 
 var webpack = require('webpack')
 var path = require('path')
 
@@ -16,12 +15,7 @@ module.exports = {
   , libraryTarget: 'umd'
   },
   module: {
-    loaders: [
-      {
-        test: /\.json$/,
-        exclude: /node_modules/,
-        loader: "json-loader"
-      }
+    rules: [
     ]
   }
 }
