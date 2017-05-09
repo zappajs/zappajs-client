@@ -140,18 +140,22 @@ Then the test runner will ask us to
         server_1.close()
         server_2.close()
 
-      jsdom = require 'jsdom'
+      {JSDOM} = jsdom = require 'jsdom'
+      old_jsdom = require 'jsdom/lib/old-api'
+
+      virtualConsole = new jsdom.VirtualConsole()
+      virtualConsole.sendTo console
 
       it 'should establish the session server-side (using browserify)', (done) ->
         @timeout 15*1000
         debug 'Starting JSDOM'
-        jsdom.env
+        old_jsdom.env
           url: "http://127.0.0.1:#{port_1}/index.html"
           scripts: ["http://127.0.0.1:#{port_1}/test.js"]
           done: (err,window) ->
             debug "JSDOM Failed: #{err.stack ? err}" if err?
             debug 'JSDOM Done'
-          virtualConsole: jsdom.createVirtualConsole().sendTo(console)
+          virtualConsole: virtualConsole
 
         io = require 'socket.io-client'
         socket = io "http://127.0.0.1:#{port_1}"
@@ -169,7 +173,7 @@ Then the test runner will ask us to
       it 'should establish the session server-side (using browser.js)', (done) ->
         @timeout 15*1000
         debug 'Starting JSDOM'
-        jsdom.env
+        old_jsdom.env
           url: "http://127.0.0.1:#{port_2}/index.html"
           scripts: [
             "http://127.0.0.1:#{port_2}/browser.js"
@@ -178,7 +182,7 @@ Then the test runner will ask us to
           done: (err,window) ->
             debug "JSDOM Failed: #{err.stack ? err}" if err?
             debug 'JSDOM Done'
-          virtualConsole: jsdom.createVirtualConsole().sendTo(console)
+          virtualConsole: virtualConsole
 
         io = require 'socket.io-client'
         socket = io "http://127.0.0.1:#{port_2}"
