@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "prepublish": "coffee -c -M *.coffee.md && webpack --optimize-minimize",
-    "pretest": "npm install",
+    "pretest": "npm install && npm install --only=dev && npm run prepublish",
     "test": "mocha"
   },
   "repository": {
