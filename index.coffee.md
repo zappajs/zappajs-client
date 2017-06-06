@@ -68,6 +68,7 @@ When all the ZappaJS-Client handshake is done, and once the DOM is ready, the ca
             get: context.get
             route: context.route
             start: context.start
+            share: share
           f.apply ctx
 
 Router
@@ -204,7 +205,7 @@ Let the socket.io server know how to retrieve the session.id by providing it the
             debug "Sending __zappa_key to server", {key}
             io.emit '__zappa_key', {key}, next
           else
-            next key: null
+            next? key: null
 
 On IO connect
 -------------

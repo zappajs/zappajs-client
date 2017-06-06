@@ -122,6 +122,7 @@ The `ready` callback is triggered once the DOM is ready and the server-side Sock
 
 The scope of the `ready` handler contains the same elements as the root scope, plus:
 - `settings`: from ZappaJS server-side
+- `share( ({key}) -> )`: allows to re-bind the socket.io session with the expressjs session (for example when a new expressjs session is generated on logout). The callback is optional and receives an object containing a non-null `key` value on success.
 
 ### this.start
 
